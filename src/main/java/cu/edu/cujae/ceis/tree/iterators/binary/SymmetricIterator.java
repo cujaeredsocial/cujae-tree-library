@@ -7,6 +7,11 @@ import cu.edu.cujae.ceis.tree.binary.BinaryTreeNode;
 import cu.edu.cujae.ceis.tree.iterators.ITreeIterator;
 import cu.edu.cujae.ceis.tree.iterators.StackNode;
 
+/**
+ * Iterator for traversing a binary tree in in-order (left-root-right).
+ * 
+ * @param <E> the type of elements stored in the tree
+ */
 public class SymmetricIterator<E> implements ITreeIterator<E>{
 
 	private BinaryTreeNode<E> nextNode;
@@ -14,6 +19,11 @@ public class SymmetricIterator<E> implements ITreeIterator<E>{
 	private Tree<E> tree;	
 	private ArrayDeque<StackNode<E>> stack;
 
+	/**
+	 * Constructs an in-order iterator for the specified tree.
+	 * 
+	 * @param tree the tree to iterate over
+	 */
 	public SymmetricIterator(Tree<E> tree) {		
 		this.tree = tree;
 
@@ -23,6 +33,11 @@ public class SymmetricIterator<E> implements ITreeIterator<E>{
 		this.tree = tree;		
 	}
 
+	/**
+	 * Returns the next node in in-order traversal.
+	 * 
+	 * @return the next binary tree node
+	 */
 	public BinaryTreeNode<E> nextNode() {
 		currentNode = nextNode;
 
@@ -58,10 +73,20 @@ public class SymmetricIterator<E> implements ITreeIterator<E>{
 		return currentNode;
 	}
 
+	/**
+	 * Returns true if the iteration has more elements.
+	 * 
+	 * @return true if there are more elements to iterate over
+	 */
 	public boolean hasNext() {
 		return nextNode != null;
 	}
 
+	/**
+	 * Returns the next element in the iteration.
+	 * 
+	 * @return the next element
+	 */
 	public E next() {
 		E currentInfo = null;
 
@@ -73,10 +98,19 @@ public class SymmetricIterator<E> implements ITreeIterator<E>{
 		return currentInfo;
 	}
 
+	/**
+	 * Removes the current node from the tree.
+	 */
 	public void remove() {
 		tree.deleteNode(currentNode);
 	}
 
+	/**
+	 * Moves the cursor to the last left node in the current path.
+	 * 
+	 * @param initialNode the starting node
+	 * @return the last left node in the current path
+	 */
 	private BinaryTreeNode<E> moveCursorToLastLeftNode(BinaryTreeNode<E> initialNode){
 		BinaryTreeNode<E> cursor = null;
 

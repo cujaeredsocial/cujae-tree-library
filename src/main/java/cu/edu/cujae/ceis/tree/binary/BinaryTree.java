@@ -10,22 +10,47 @@ import cu.edu.cujae.ceis.tree.iterators.binary.PosOrderIterator;
 import cu.edu.cujae.ceis.tree.iterators.binary.PreorderIterator;
 import cu.edu.cujae.ceis.tree.iterators.binary.SymmetricIterator;
 
+/**
+ * Implementation of a binary tree data structure.
+ * Provides operations for binary tree manipulation and traversal.
+ * 
+ * @param <E> the type of elements stored in the tree
+ */
 public class BinaryTree<E> extends Tree<E> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructs an empty binary tree.
+	 */
 	public BinaryTree() {
 		super();
 	}
 
+	/**
+	 * Constructs a binary tree with the specified root node.
+	 * 
+	 * @param root the root node of the tree
+	 */
 	public BinaryTree(TreeNode<E> root) {
 		super(root);
 	}
 
+	/**
+	 * Constructs a binary tree with the specified binary tree node as root.
+	 * 
+	 * @param root the binary tree node to use as root
+	 */
 	public BinaryTree(BinaryTreeNode<E> root) {
 		this.root = root;
 	}
 	
+	/**
+	 * Calculates the level of the subtree starting from the specified cursor node.
+	 * 
+	 * @param cursor the starting node
+	 * @return the level of the subtree
+	 */
 	protected int level(BinaryTreeNode<E> cursor) {
 		if (cursor != null) {
 			int levelLST = level(cursor.getLeft());
@@ -35,6 +60,11 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return -1;
 	}
 
+	/**
+	 * Returns the level of the tree.
+	 * 
+	 * @return 0 if tree has root, -1 if empty
+	 */
 	public int treeLevel() {
 		int level = -1;
 		
@@ -44,6 +74,12 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return level;
 	}
 
+	/**
+	 * Returns the level of the specified node in the tree.
+	 * 
+	 * @param node the node to find the level for
+	 * @return the level of the node, or -1 if node is not found
+	 */
 	public int nodeLevel(TreeNode<E> node) {
 		if (node != null) {
 			return node.equals(root) ? 0 : nodeLevel(getFather((BinaryTreeNode<E>)node)) + 1;
@@ -51,6 +87,12 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return -1;
 	}		
 
+	/**
+	 * Deletes the specified node from the tree.
+	 * 
+	 * @param node the node to delete
+	 * @return the information stored in the deleted node
+	 */
 	public E deleteNode(BinaryTreeNode<E> node) {
 		if (node != null) {
 			if (root != null && root.equals(node)) {
@@ -64,6 +106,12 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return null;
 	}
 
+	/**
+	 * Deletes a node that is not the root.
+	 * 
+	 * @param node the node to delete
+	 * @param father the parent of the node to delete
+	 */
 	private void deleteNotRoot(BinaryTreeNode<E> node, BinaryTreeNode<E> father) {
 		if (node != null && father != null) {			
 			if(father.getLeft() != null && father.getLeft().equals(node))
@@ -74,6 +122,12 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		}
 	}
 
+	/**
+	 * Returns the degree (number of children) of the specified node.
+	 * 
+	 * @param node the node to check
+	 * @return the degree of the node (0, 1, or 2 for binary trees)
+	 */
 	public int nodeDegree(TreeNode<E> node) {
 		int degree = 0;
 
@@ -86,25 +140,12 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return degree;
 	}
 
-	/*public boolean divideTree(BinaryTreeNode<E> node, BinaryTree<E> treeA,
-			BinaryTree<E> treeB) {
-		boolean divided = true;
-		if (node != null) {
-			if (node.equals(root)) {
-				getNodeSubTree((BinaryTreeNode<E>) root, null, treeA);
-				treeB.setRoot(null);
-			} else {
-				getNodeSubTree((BinaryTreeNode<E>) root, node, treeA);
-				getNodeSubTree(node, null, treeB);
-			}
-		} else {
-			treeA.setRoot(null);
-			treeB.setRoot(null);
-			divided = false;
-		}
-		return divided;
-	}*/
-
+	/**
+	 * Returns the parent node of the specified node.
+	 * 
+	 * @param node the node to find the parent for
+	 * @return the parent node, or null if node is root or not found
+	 */
 	public BinaryTreeNode<E> getFather(BinaryTreeNode<E> node) {
 		BinaryTreeNode<E> returnNode = null;
 
@@ -126,6 +167,11 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return returnNode;
 	}
 
+	/**
+	 * Returns a list of all leaf nodes in the tree.
+	 * 
+	 * @return list of leaf nodes
+	 */
 	public List<TreeNode<E>> getLeaves() {
 		List<TreeNode<E>> leavesList = new ArrayList<TreeNode<E>>();
 
@@ -141,6 +187,13 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return leavesList;
 	}
 
+	/**
+	 * Helper method to get a subtree starting from the specified root.
+	 * 
+	 * @param root the root of the subtree
+	 * @param node the node to stop at
+	 * @param tree the tree to build
+	 */
 	private void getNodeSubTree(BinaryTreeNode<E> root, BinaryTreeNode<E> node,
 			BinaryTree<E> tree) {
 		if (root != null && !root.equals(node)) {
@@ -163,6 +216,12 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		}
 	}
 
+	/**
+	 * Returns a list of direct children of the specified node.
+	 * 
+	 * @param node the parent node
+	 * @return list of child nodes
+	 */
 	public List<BinaryTreeNode<E>> getSons(BinaryTreeNode<E> node) {
 		List<BinaryTreeNode<E>> sons = new ArrayList<BinaryTreeNode<E>>();
 
@@ -177,6 +236,12 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return sons;
 	}
 
+	/**
+	 * Returns a subtree rooted at the specified node.
+	 * 
+	 * @param node the root of the subtree
+	 * @return a new binary tree representing the subtree
+	 */
 	public BinaryTree<E> getSubTree(BinaryTreeNode<E> node) {
 		BinaryTree<E> tree = null;
 		
@@ -203,6 +268,12 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return tree;
 	}
 	
+	/**
+	 * Recursively builds a subtree by copying nodes from source to destination.
+	 * 
+	 * @param srcFather the source parent node
+	 * @param newFather the destination parent node
+	 */
 	private void buildSubTree(BinaryTreeNode<E> srcFather, BinaryTreeNode<E> newFather){
 		if(srcFather.getLeft() != null){
 			BinaryTreeNode<E> newLeft = new BinaryTreeNode<E>(srcFather.getLeft().getInfo());
@@ -221,6 +292,14 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		}
 	}
 
+	/**
+	 * Inserts a node into the tree at the specified position relative to a parent node.
+	 * 
+	 * @param node the node to insert
+	 * @param type 'L' for left child, 'R' for right child, 'R' for root if father is null
+	 * @param father the parent node, or null for root insertion
+	 * @return true if insertion was successful, false otherwise
+	 */
 	public boolean insertNode(BinaryTreeNode<E> node, char type, BinaryTreeNode<E> father) {		
 		boolean inserted = false;
 
@@ -247,21 +326,26 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 				}
 
 				if (existsFather) {
-					if (type == 'L') {//izq
+					if (type == 'L') {//left
 						node.setLeft(father.getLeft());
 						father.setLeft(node);
-					} else {//der
+					} else {//right
 						node.setRight(father.getRight());
 						father.setRight(node);
 					}
 					inserted = true;
 				}
-			}//llave del else
-		} //llave del if node  != null
+			}
+		}
 
 		return inserted;
 	}	
 
+	/**
+	 * Returns the total number of nodes in the tree.
+	 * 
+	 * @return the total number of nodes
+	 */
 	public int totalNodes() {		
 		int count = 0;
 
@@ -275,30 +359,67 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return count;
 	}
 
+	/**
+	 * Returns the root node of the tree.
+	 * 
+	 * @return the root node
+	 */
 	public TreeNode<E> getRoot() {return root;}	
 
+	/**
+	 * Returns a pre-order iterator for the tree.
+	 * 
+	 * @return pre-order iterator
+	 */
 	public PreorderIterator<E> preOrderIterator(){
 		return new PreorderIterator<E>(this);
 	}
 
+	/**
+	 * Returns an in-order (symmetric) iterator for the tree.
+	 * 
+	 * @return in-order iterator
+	 */
 	public SymmetricIterator<E> symmetricIterator(){
 		return new SymmetricIterator<E>(this);
 	}
 
+	/**
+	 * Returns a post-order iterator for the tree.
+	 * 
+	 * @return post-order iterator
+	 */
 	public PosOrderIterator<E> posOrderIterator(){
 		return new PosOrderIterator<E>(this);
 	}
 
+	/**
+	 * Checks if the specified node is a leaf node.
+	 * 
+	 * @param node the node to check
+	 * @return true if the node is a leaf, false otherwise
+	 */
 	public boolean nodeIsLeaf(TreeNode<E> node) {		
 		return ((BinaryTreeNode<E>)node).getLeft() == null && ((BinaryTreeNode<E>)node).getRight() == null;
 	}
 
+	/**
+	 * Returns the height of the tree.
+	 * 
+	 * @return the tree height
+	 */
 	@Override
 	public int treeHeight() {
 		return level((BinaryTreeNode<E>) root);
 	}
 
-	// Added By Danielo
+	/**
+	 * Traverses the tree in pre-order and builds a string representation with visual formatting.
+	 * 
+	 * @param root the root node to start traversal from
+	 * @param sb the string builder to append the representation to
+	 * @return string representation of the tree
+	 */
 	public String traversePreOrder(BinaryTreeNode root, StringBuilder sb) {
 
 		if (root == null) {
@@ -316,6 +437,15 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return sb.toString();
 	}
 
+	/**
+	 * Helper method for tree traversal and string representation.
+	 * 
+	 * @param sb the string builder to append to
+	 * @param padding the padding for the current level
+	 * @param pointer the pointer symbol for the current node
+	 * @param node the current node
+	 * @param hasRightSibling whether the node has a right sibling
+	 */
 	private void traverseNodes(StringBuilder sb, String padding, String pointer, BinaryTreeNode node, boolean hasRightSibling) {
 		if (node != null) {
 			sb.append("\n");
@@ -339,6 +469,11 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		}
 	}
 
+	/**
+	 * Returns a string representation of the tree with visual formatting.
+	 * 
+	 * @return string representation of the tree
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -346,7 +481,3 @@ public class BinaryTree<E> extends Tree<E> implements Serializable{
 		return sb.toString();
 	}
 }
-
-
-
-

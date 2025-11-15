@@ -7,12 +7,22 @@ import cu.edu.cujae.ceis.tree.binary.BinaryTreeNode;
 import cu.edu.cujae.ceis.tree.iterators.ITreeIterator;
 import cu.edu.cujae.ceis.tree.iterators.StackNode;
 
+/**
+ * Iterator for traversing a binary tree in post-order (left-right-root).
+ * 
+ * @param <E> the type of elements stored in the tree
+ */
 public class PosOrderIterator<E> implements ITreeIterator<E> {
 	private StackNode<E> nextNode;
 	private BinaryTreeNode<E> currentNode;
 	private Tree<E> tree;	
 	private ArrayDeque<StackNode<E>> stack;
 
+	/**
+	 * Constructs a post-order iterator for the specified tree.
+	 * 
+	 * @param tree the tree to iterate over
+	 */
 	public PosOrderIterator(Tree<E> tree) {
 		this.tree = tree;
 
@@ -26,6 +36,11 @@ public class PosOrderIterator<E> implements ITreeIterator<E> {
 		this.tree = tree;	
 	}
 
+	/**
+	 * Returns the next node in post-order traversal.
+	 * 
+	 * @return the next binary tree node
+	 */
 	public BinaryTreeNode<E> nextNode() {
 		currentNode = null;
 
@@ -62,10 +77,20 @@ public class PosOrderIterator<E> implements ITreeIterator<E> {
 		return currentNode;
 	}
 
+	/**
+	 * Returns true if the iteration has more elements.
+	 * 
+	 * @return true if there are more elements to iterate over
+	 */
 	public boolean hasNext() {
 		return nextNode != null;
 	}
 
+	/**
+	 * Returns the next element in the iteration.
+	 * 
+	 * @return the next element
+	 */
 	public E next() {
 		E currentInfo = null;
 
@@ -77,10 +102,19 @@ public class PosOrderIterator<E> implements ITreeIterator<E> {
 		return currentInfo;
 	}
 
+	/**
+	 * Removes the current node from the tree.
+	 */
 	public void remove() {
 		tree.deleteNode(currentNode);
 	}
 
+	/**
+	 * Moves the cursor to the last left or right node in the current path.
+	 * 
+	 * @param initialNode the starting node
+	 * @return the last node in the current path
+	 */
 	private BinaryTreeNode<E> moveCursorToLastLeftOrRightNode(BinaryTreeNode<E> initialNode){
 		BinaryTreeNode<E> cursor = initialNode;
 

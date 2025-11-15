@@ -12,17 +12,36 @@ import cu.edu.cujae.ceis.tree.iterators.general.InBreadthIterator;
 import cu.edu.cujae.ceis.tree.iterators.general.InBreadthIteratorWithLevels;
 import cu.edu.cujae.ceis.tree.iterators.general.InDepthIterator;
 
+/**
+ * Implementation of a general tree (multi-way tree) using a binary tree representation.
+ * Each node can have multiple children represented as a linked list through right pointers.
+ * 
+ * @param <E> the type of elements stored in the tree
+ */
 public class GeneralTree<E> extends Tree<E> implements Serializable {	
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Constructs an empty general tree.
+	 */
 	public GeneralTree() {
 		super();
 	}
 
+	/**
+	 * Constructs a general tree with the specified root node.
+	 * 
+	 * @param root the root node of the tree
+	 */
 	public GeneralTree(BinaryTreeNode<E> root) {
 		super(root);
 	}
 
+	/**
+	 * Returns the total number of nodes in the tree.
+	 * 
+	 * @return the total number of nodes
+	 */
 	public int totalNodes() {
 		int count = 0;
 
@@ -36,6 +55,12 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return count;
 	}
 
+	/**
+	 * Deletes the specified node from the tree.
+	 * 
+	 * @param node the node to delete
+	 * @return the information stored in the deleted node
+	 */
 	public E deleteNode(BinaryTreeNode<E> node) {
 		E info = null;
 
@@ -85,7 +110,12 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return info;
 	}
 
-
+	/**
+	 * Returns the parent node of the specified node.
+	 * 
+	 * @param node the node to find the parent for
+	 * @return the parent node, or null if node is root or not found
+	 */
 	public BinaryTreeNode<E> getFather(BinaryTreeNode<E> node) {
 		BinaryTreeNode<E> father = null;
 
@@ -116,16 +146,17 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 						}
 					}
 				}
-				/*if(node.equals(((BinaryTreeNode<E>) cursor).getRight())){											
-					father = getFather(cursor);
-					foundedNode = true;
-				}*/
 			}		
 		}
 
 		return father;
 	}
 
+	/**
+	 * Returns a list of all leaf nodes in the tree.
+	 * 
+	 * @return list of leaf nodes
+	 */
 	public List<TreeNode<E>> getLeaves() {
 		ArrayList<TreeNode<E>> leavesList = new ArrayList<TreeNode<E>>();
 
@@ -143,6 +174,12 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return leavesList;
 	}
 
+	/**
+	 * Returns a list of direct children of the specified node.
+	 * 
+	 * @param node the parent node
+	 * @return list of child nodes
+	 */
 	public List<BinaryTreeNode<E>> getSons(BinaryTreeNode<E> node) {
 		List<BinaryTreeNode<E>> sonsList = new ArrayList<BinaryTreeNode<E>>();
 
@@ -162,6 +199,12 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return sonsList;
 	}
 
+	/**
+	 * Returns a list of information from the direct children of the specified node.
+	 * 
+	 * @param node the parent node
+	 * @return list of child node information
+	 */
 	public List<E> getSonsInfo(BinaryTreeNode<E> node) {
 		List<E> sonsInfoList = new ArrayList<E>();
 
@@ -182,6 +225,13 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return sonsInfoList;
 	}	
 
+	/**
+	 * Inserts a node as a child of the specified parent node.
+	 * 
+	 * @param node the node to insert
+	 * @param father the parent node, or null to insert as sibling of root
+	 * @return true if insertion was successful, false otherwise
+	 */
 	public boolean insertNode(BinaryTreeNode<E> node, BinaryTreeNode<E> father) {
 		boolean inserted = false;
 
@@ -241,9 +291,12 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return inserted;
 	}
 
-	/* 
-	 * This method was written by Edson Francisco Gamboa Baptista
-	 * Student of group If-22 period 2012-2013
+	/** 
+	 * Inserts a node as the first child of the specified parent node.
+	 * 
+	 * @param node the node to insert
+	 * @param father the parent node
+	 * @return true if insertion was successful, false otherwise
 	 */
 	public boolean insertAsFirstSon(BinaryTreeNode<E> node, BinaryTreeNode<E> father) {		
 		boolean founded = false;
@@ -271,6 +324,12 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return founded;		
 	}
 
+	/**
+	 * Returns the level of the specified node in the tree.
+	 * 
+	 * @param node the node to find the level for
+	 * @return the level of the node, or -1 if node is not found
+	 */
 	public int nodeLevel(TreeNode<E> node) {
 		int level = -1;
 
@@ -297,10 +356,21 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return level;
 	}
 
+	/**
+	 * Returns the maximum level of the tree.
+	 * 
+	 * @return the tree level
+	 */
 	public int treeLevel() {				
 		return nodeLevel(root);
 	}
 
+	/**
+	 * Checks if the specified node is a leaf node.
+	 * 
+	 * @param node the node to check
+	 * @return true if the node is a leaf, false otherwise
+	 */
 	public boolean nodeIsLeaf(TreeNode<E> node) {
 		if(node != null)
 			return ((BinaryTreeNode<E>)node).getLeft() == null;
@@ -308,6 +378,12 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return false;
 	}
 
+	/**
+	 * Returns the degree (number of children) of the specified node.
+	 * 
+	 * @param node the node to check
+	 * @return the degree of the node
+	 */
 	public int nodeDegree (TreeNode<E> node) {
 		int degree = -1;
 
@@ -320,6 +396,12 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return degree;
 	}
 
+	/**
+	 * Counts the number of right siblings (children of the same parent).
+	 * 
+	 * @param node the starting node
+	 * @return the count of right siblings
+	 */
 	private int rightBrotherCount(BinaryTreeNode<E> node) {
 		int brother = 0;
 		if (node.getRight() != null) 
@@ -327,18 +409,38 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return brother;
 	}
 
+	/**
+	 * Returns an in-depth (pre-order) iterator for the tree.
+	 * 
+	 * @return in-depth iterator
+	 */
 	public InDepthIterator<E> inDepthIterator(){
 		return new InDepthIterator<E>(this);
 	}
 
+	/**
+	 * Returns a breadth-first iterator for the tree.
+	 * 
+	 * @return breadth-first iterator
+	 */
 	public InBreadthIterator<E> inBreadthIterator(){
 		return new InBreadthIterator<E>(this);
 	}
 
+	/**
+	 * Returns a breadth-first iterator that includes level information.
+	 * 
+	 * @return breadth-first iterator with levels
+	 */
 	public InBreadthIteratorWithLevels<E> inBreadthIteratorWithLevels(){
 		return new InBreadthIteratorWithLevels<E>(this);
 	}
 
+	/**
+	 * Returns the height of the tree.
+	 * 
+	 * @return the tree height
+	 */
 	public int treeHeight() {
 		int height = -1;
 		InBreadthIteratorWithLevels<E> iter = inBreadthIteratorWithLevels();
@@ -354,7 +456,13 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return height;
 	}
 
-	// Added By Danielo
+	/**
+	 * Traverses the tree in pre-order and builds a string representation with visual formatting.
+	 * 
+	 * @param root the root node to start traversal from
+	 * @param sb the string builder to append the representation to
+	 * @return string representation of the tree
+	 */
 	private String traversePreOrder(BinaryTreeNode root, StringBuilder sb) {
 
 		if (root == null) {
@@ -364,7 +472,6 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		sb.append(root.getInfo().toString());
 
 		List<BinaryTreeNode> binaryTreeNodes = getSons(root);
-		//Collections.reverse(binaryTreeNodes);
 		for (int i = 0; i < binaryTreeNodes.size(); i++) {
 			boolean hasRightSibling = i < binaryTreeNodes.size() - 1;
 			String currentPointer = (hasRightSibling) ? "├──" : "└──";
@@ -375,6 +482,15 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return sb.toString();
 	}
 
+	/**
+	 * Helper method for tree traversal and string representation.
+	 * 
+	 * @param sb the string builder to append to
+	 * @param padding the padding for the current level
+	 * @param pointer the pointer symbol for the current node
+	 * @param node the current node
+	 * @param hasRightSibling whether the node has a right sibling
+	 */
 	private void traverseNodes(StringBuilder sb, String padding, String pointer, BinaryTreeNode node, boolean hasRightSibling) {
 		if (node != null) {
 			sb.append("\n");
@@ -390,7 +506,6 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 			}
 
 			List<BinaryTreeNode> binaryTreeNodes = getSons(node);
-			//Collections.reverse(binaryTreeNodes);
 			for (int i = 0; i < binaryTreeNodes.size(); i++) {
 				hasRightSibling = i < binaryTreeNodes.size() - 1;
 				String currentPointer = (hasRightSibling) ? "├──" : "└──";
@@ -400,6 +515,11 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		}
 	}
 
+	/**
+	 * Returns a string representation of the tree with visual formatting.
+	 * 
+	 * @return string representation of the tree
+	 */
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -407,35 +527,3 @@ public class GeneralTree<E> extends Tree<E> implements Serializable {
 		return sb.toString();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
