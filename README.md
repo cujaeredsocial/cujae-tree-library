@@ -25,104 +25,116 @@ La librería contiene implementaciones de diferentes tipos de árboles:
 
 ## Paquete
 ```java
-import cu.cujae.ceis.tree;
+import cu.edu.cujae.ceis.tree;
 ```
 
 ## Métodos Disponibles
 
 ```java
 // Tree.java (Clase Abstracta)
-isEmpty()                     // Verifica si el árbol está vacío
-getRoot()                     // Obtiene el nodo raíz
-setRoot(TreeNode<E> root)     // Establece el nodo raíz
-totalNodes()                  // Retorna el total de nodos (abstracto)
-getLeaves()                   // Obtiene todas las hojas (abstracto)
-nodeLevel(TreeNode<E> node)   // Obtiene el nivel de un nodo (abstracto)
-treeLevel()                   // Obtiene el nivel del árbol (abstracto)
-treeHeight()                  // Obtiene la altura del árbol (abstracto)
-nodeIsLeaf(TreeNode<E> node)  // Verifica si un nodo es hoja (abstracto)
-nodeDegree(TreeNode<E> node)  // Obtiene el grado de un nodo (abstracto)
-deleteNode(BinaryTreeNode<E> node) // Elimina un nodo (abstracto)
+public abstract class Tree<E> {
+    public boolean isEmpty()
+    public TreeNode<E> getRoot()
+    public void setRoot(TreeNode<E> root)
+    public abstract int totalNodes()
+    public abstract List<TreeNode<E>> getLeaves()
+    public abstract int nodeLevel(TreeNode<E> node)
+    public abstract int treeLevel()
+    public abstract int treeHeight()
+    public abstract boolean nodeIsLeaf(TreeNode<E> node)
+    public abstract int nodeDegree(TreeNode<E> node)
+    public abstract void deleteNode(BinaryTreeNode<E> node)
+}
 ```
 
 ```java
 // TreeNode.java (Clase Abstracta)
-TreeNode()                    // Constructor por defecto
-TreeNode(E info)              // Constructor con información
+public abstract class TreeNode<E> {
+    public TreeNode()
+    public TreeNode(E info)
+}
 ```
 
 ```java
 // BinaryTree.java
-BinaryTree()                  // Constructor vacío
-BinaryTree(TreeNode<E> root)  // Constructor con raíz
-
-treeLevel()                   // Obtiene el nivel del árbol
-nodeLevel(TreeNode<E> node)   // Obtiene el nivel de un nodo
-deleteNode(BinaryTreeNode<E> node) // Elimina un nodo
-nodeDegree(TreeNode<E> node)  // Obtiene el grado de un nodo
-getFather(BinaryTreeNode<E> node) // Obtiene el padre de un nodo
-getLeaves()                   // Obtiene todas las hojas
-getSons(BinaryTreeNode<E> node) // Obtiene los hijos de un nodo
-getSubTree(BinaryTreeNode<E> node) // Obtiene un subárbol
-insertNode(BinaryTreeNode<E> node, char type, BinaryTreeNode<E> father) // Inserta un nodo
-totalNodes()                  // Cuenta el total de nodos
-preOrderIterator()            // Iterador en preorden
-symmetricIterator()           // Iterador simétrico (inorden)
-posOrderIterator()            // Iterador en postorden
-nodeIsLeaf(TreeNode<E> node)  // Verifica si un nodo es hoja
-treeHeight()                  // Obtiene la altura del árbol
-toString()                    // Representación visual del árbol
+public class BinaryTree<E> extends Tree<E> {
+    public BinaryTree()
+    public BinaryTree(TreeNode<E> root)
+    
+    public int treeLevel()
+    public int nodeLevel(TreeNode<E> node)
+    public void deleteNode(BinaryTreeNode<E> node)
+    public int nodeDegree(TreeNode<E> node)
+    public BinaryTreeNode<E> getFather(BinaryTreeNode<E> node)
+    public List<TreeNode<E>> getLeaves()
+    public List<BinaryTreeNode<E>> getSons(BinaryTreeNode<E> node)
+    public BinaryTree<E> getSubTree(BinaryTreeNode<E> node)
+    public void insertNode(BinaryTreeNode<E> node, char type, BinaryTreeNode<E> father)
+    public int totalNodes()
+    public Iterator<E> preOrderIterator()
+    public Iterator<E> symmetricIterator()
+    public Iterator<E> posOrderIterator()
+    public boolean nodeIsLeaf(TreeNode<E> node)
+    public int treeHeight()
+    public String toString()
+}
 ```
 
 ```java
 // BinaryTreeNode.java
-BinaryTreeNode()              // Constructor por defecto
-BinaryTreeNode(E info)        // Constructor con información
-
-getInfo()                     // Obtiene la información
-setInfo(E info)               // Establece la información
-getLeft()                     // Obtiene el hijo izquierdo
-setLeft(BinaryTreeNode<E> left) // Establece el hijo izquierdo
-getRight()                    // Obtiene el hijo derecho
-setRight(BinaryTreeNode<E> right) // Establece el hijo derecho
+public class BinaryTreeNode<E> extends TreeNode<E> {
+    public BinaryTreeNode()
+    public BinaryTreeNode(E info)
+    
+    public E getInfo()
+    public void setInfo(E info)
+    public BinaryTreeNode<E> getLeft()
+    public void setLeft(BinaryTreeNode<E> left)
+    public BinaryTreeNode<E> getRight()
+    public void setRight(BinaryTreeNode<E> right)
+}
 ```
 
 ```java
 // GeneralTree.java
-totalNodes()                  // Total de nodos en el árbol
-deleteNode(BinaryTreeNode<E> node) // Elimina un nodo
-getFather(BinaryTreeNode<E> node) // Obtiene el padre de un nodo
-getLeaves()                   // Obtiene las hojas del árbol
-getSons(BinaryTreeNode<E> node) // Obtiene los hijos de un nodo
-getSonsInfo(BinaryTreeNode<E> node) // Obtiene la información de los hijos
-insertNode(BinaryTreeNode<E> node, BinaryTreeNode<E> father) // Inserta un nodo
-insertAsFirstSon(BinaryTreeNode<E> node, BinaryTreeNode<E> father) // Inserta como primer hijo
-nodeLevel(TreeNode<E> node)   // Nivel de un nodo
-treeLevel()                   // Nivel del árbol
-nodeIsLeaf(TreeNode<E> node)  // Verifica si es hoja
-nodeDegree(TreeNode<E> node)  // Grado de un nodo
-inDepthIterator()             // Iterador en profundidad
-inBreadthIterator()           // Iterador en anchura
-inBreadthIteratorWithLevels() // Iterador en anchura con niveles
-treeHeight()                  // Altura del árbol
-toString()                    // Representación visual
+public class GeneralTree<E> extends Tree<E> {
+    public int totalNodes()
+    public void deleteNode(BinaryTreeNode<E> node)
+    public BinaryTreeNode<E> getFather(BinaryTreeNode<E> node)
+    public List<TreeNode<E>> getLeaves()
+    public List<BinaryTreeNode<E>> getSons(BinaryTreeNode<E> node)
+    public List<E> getSonsInfo(BinaryTreeNode<E> node)
+    public void insertNode(BinaryTreeNode<E> node, BinaryTreeNode<E> father)
+    public void insertAsFirstSon(BinaryTreeNode<E> node, BinaryTreeNode<E> father)
+    public int nodeLevel(TreeNode<E> node)
+    public int treeLevel()
+    public boolean nodeIsLeaf(TreeNode<E> node)
+    public int nodeDegree(TreeNode<E> node)
+    public Iterator<E> inDepthIterator()
+    public Iterator<E> inBreadthIterator()
+    public Iterator<Pair<E, Integer>> inBreadthIteratorWithLevels()
+    public int treeHeight()
+    public String toString()
+}
 ```
 
 ```java
 // LexicographicTree.java
-insertValueRecursive(E info)  // Inserta valor recursivamente
-deleteNode(E info)            // Elimina un nodo por información
-insertValue(E value)          // Inserta un valor
-getOrderedItems()             // Obtiene elementos ordenados
-insertNode(BinaryTreeNode<E> node, char type, BinaryTreeNode<E> father) // Inserta nodo
+public class LexicographicTree<E> extends BinaryTree<E> {
+    public void insertValueRecursive(E info)
+    public void deleteNode(E info)
+    public void insertValue(E value)
+    public List<E> getOrderedItems()
+    public void insertNode(BinaryTreeNode<E> node, char type, BinaryTreeNode<E> father)
+}
 ```
 
 ```java
 // Iteradores
-PreorderIterator<E>           // Iterador preorden para árboles binarios
-SymmetricIterator<E>          // Iterador simétrico para árboles binarios
-PosOrderIterator<E>           // Iterador postorden para árboles binarios
-InDepthIterator<E>            // Iterador en profundidad para árboles generales
-InBreadthIterator<E>          // Iterador en anchura para árboles generales
-InBreadthIteratorWithLevels<E> // Iterador en anchura con niveles
+public class PreorderIterator<E> implements Iterator<E>
+public class SymmetricIterator<E> implements Iterator<E>
+public class PosOrderIterator<E> implements Iterator<E>
+public class InDepthIterator<E> implements Iterator<E>
+public class InBreadthIterator<E> implements Iterator<E>
+public class InBreadthIteratorWithLevels<E> implements Iterator<Pair<E, Integer>>
 ```
