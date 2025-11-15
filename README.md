@@ -28,6 +28,8 @@ La librería contiene implementaciones de diferentes tipos de árboles:
 import cu.edu.cujae.ceis.tree;
 ```
 
+> Especificación de Javadocs se encuentra en: https://cujaeredsocial.github.io/cujae-tree-library/javadoc/
+
 ## Métodos Disponibles
 
 ```java
